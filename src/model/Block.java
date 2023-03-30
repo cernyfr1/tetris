@@ -1,28 +1,43 @@
 package model;
 
-public class Block {
-    private int x, y;
-    private int color;
+import java.awt.*;
 
-    public Block(int x, int y, int color) {
-        this.x = x;
-        this.y = y;
+public class Block {
+    public static final int BLOCK_SIZE = 20;
+    private int row, column;
+    private Color color;
+
+    public Block(int row, int column) {
+        this.row = row;
+        this.column = column;
+        this.color = Color.BLACK;
+    }
+
+    public int getRow() {
+        return row;
+    }
+
+    public void setRow(int row) {
+        this.row = row;
+    }
+
+    public int getColumn() {
+        return column;
+    }
+
+    public void setColumn(int column) {
+        this.column = column;
+    }
+
+    public Color getColor() {
+        return color;
+    }
+
+    public void setColor(Color color) {
         this.color = color;
     }
-
-    public int getX() {
-        return x;
-    }
-
-    public void setX(int x) {
-        this.x = x;
-    }
-
-    public int getY() {
-        return y;
-    }
-
-    public void setY(int y) {
-        this.y = y;
+    public void paint(Graphics g){
+        g.setColor(color);
+        g.fillRect(column*BLOCK_SIZE,row*BLOCK_SIZE,BLOCK_SIZE,BLOCK_SIZE);
     }
 }
