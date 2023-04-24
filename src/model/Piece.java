@@ -1,7 +1,5 @@
 package model;
 
-import model.Shape;
-
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,11 +9,9 @@ public class Piece {
 
     private final Shape shape;
     private List<Block> blocks;
-    private final Board board;
     private final Color color;
     private Block pivotBlock;
     public Piece(Board board) {
-        this.board = board;
         this.shape = randomShape();
         this.blocks = new ArrayList<>();
         int[][] initialCoordinates = new int[][]{};

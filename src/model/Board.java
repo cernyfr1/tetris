@@ -2,7 +2,6 @@ package model;
 
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class Board {
@@ -57,6 +56,7 @@ public class Board {
             b.setColor(piece.getColor());
         }
         piece.setBlocks(newBlocks);
+        checkUnder();
     }
     public void moveRight(){
         List<Block> pieceBlocks = piece.getBlocks();
@@ -82,6 +82,7 @@ public class Board {
             b.setColor(piece.getColor());
         }
         piece.setBlocks(newBlocks);
+        checkUnder();
     }
     public void moveDown(){
         List<Block> pieceBlocks = piece.getBlocks();
@@ -107,6 +108,7 @@ public class Board {
             b.setColor(piece.getColor());
         }
         piece.setBlocks(newBlocks);
+        checkUnder();
     }
     public void rotate() {
         if (piece.getShape() == Shape.O) {
@@ -143,6 +145,7 @@ public class Board {
             block.setColor(piece.getColor());
         }
         piece.setBlocks(newBlocks);
+        checkUnder();
     }
 
     private boolean isOutOfTheBoard(int row, int col) {
@@ -161,5 +164,14 @@ public class Board {
 
     public void newPiece(){
         piece = new Piece(this);
+    }
+
+    private void checkUnder() {
+        for (Block b : piece.getBlocks()) {
+            if (b.getRow() == Board.ROW_COUNT-1  || (blocks[b.getRow()+1][b.getColumn()].getColor() != Color.BLACK && !piece.getBlocks().contains(blocks[b.getRow()+1][b.getColumn()]))) {
+                piece = new Piece(this);
+                return;
+            }
+        }
     }
 }
