@@ -13,6 +13,7 @@ public class Piece {
     private List<Block> blocks;
     private final Board board;
     private final Color color;
+    private Block pivotBlock;
     public Piece(Board board) {
         this.board = board;
         this.shape = randomShape();
@@ -22,6 +23,7 @@ public class Piece {
             case T -> {
                 initialCoordinates = new int[][] {{0,3},{0,4},{0,5},{1,4}};
                 color = Color.MAGENTA;
+                pivotBlock = board.getBlock(0,4);
             }
             case O -> {
                 initialCoordinates = new int[][] {{0,4},{0,5},{1,4},{1,5}};
@@ -30,22 +32,27 @@ public class Piece {
             case I -> {
                 initialCoordinates = new int[][] {{0,3},{0,4},{0,5},{0,6}};
                 color = Color.CYAN;
+                pivotBlock = board.getBlock(0,5);
             }
             case J -> {
                 initialCoordinates = new int[][] {{0,3},{1,3},{1,4},{1,5}};
                 color = Color.BLUE;
+                pivotBlock = board.getBlock(1,4);
             }
             case L -> {
                 initialCoordinates = new int[][] {{1,3},{1,4},{1,5},{0,5}};
                 color = Color.ORANGE;
+                pivotBlock = board.getBlock(1,4);
             }
             case S -> {
                 initialCoordinates = new int[][] {{1,3},{1,4},{0,4},{0,5}};
                 color = Color.GREEN;
+                pivotBlock = board.getBlock(1,4);
             }
             case Z -> {
                 initialCoordinates = new int[][] {{0,3},{0,4},{1,4},{1,5}};
                 color = Color.RED;
+                pivotBlock = board.getBlock(1,4);
             }
             default -> color = Color.BLACK;
         }
@@ -75,5 +82,13 @@ public class Piece {
 
     public Color getColor() {
         return color;
+    }
+
+    public Block getPivotBlock() {
+        return pivotBlock;
+    }
+
+    public void setPivotBlock(Block pivotBlock) {
+        this.pivotBlock = pivotBlock;
     }
 }

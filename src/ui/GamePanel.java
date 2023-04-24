@@ -45,6 +45,18 @@ public class GamePanel extends JComponent implements KeyListener {
                 board.moveRight();
                 repaint();
             }
+            case KeyEvent.VK_DOWN -> {
+                board.moveDown();
+                repaint();
+            }
+            case KeyEvent.VK_UP -> {
+                board.rotate();
+                repaint();
+            }
+            case KeyEvent.VK_SPACE -> {
+                board.newPiece();
+                repaint();
+            }
         }
     }
 }
