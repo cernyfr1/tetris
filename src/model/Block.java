@@ -40,4 +40,9 @@ public class Block {
         g.setColor(color);
         g.fillRect(column*BLOCK_SIZE,row*BLOCK_SIZE,BLOCK_SIZE,BLOCK_SIZE);
     }
+
+    @Override
+    public String toString() {
+        return "[" + row +" : "+ column +" : "+ color.getRGB() + "]";
+    }
 }

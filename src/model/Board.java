@@ -2,6 +2,7 @@ package model;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Board {
@@ -169,8 +170,28 @@ public class Board {
     private void checkUnder() {
         for (Block b : piece.getBlocks()) {
             if (b.getRow() == Board.ROW_COUNT-1  || (blocks[b.getRow()+1][b.getColumn()].getColor() != Color.BLACK && !piece.getBlocks().contains(blocks[b.getRow()+1][b.getColumn()]))) {
+                checkForCompleteRows();
                 piece = new Piece(this);
                 return;
+            }
+        }
+    }
+
+    private void deleteRow(int rowIndex) {
+        System.out.println("delete" + rowIndex);
+        for (int row = rowIndex; row > 0; row--) {
+            blocks[row] = blocks[row-1].clone();
+            Arrays.stream(blocks[row]).forEach(block -> block.setRow(block.getRow()+1));
+        }
+        for (int col = 0; col < COLUMN_COUNT; col++) {
+            blocks[0][col] = new Block(0,col);
+        }
+    }
+
+    private void checkForCompleteRows() {
+        for (int row = 0; row < ROW_COUNT; row++) {
+            if (Arrays.stream(blocks[row]).allMatch(block -> block.getColor() != Color.BLACK)) {
+                deleteRow(row);
             }
         }
     }
