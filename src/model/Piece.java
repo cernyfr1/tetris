@@ -53,6 +53,10 @@ public class Piece {
             default -> color = Color.BLACK;
         }
         for (int i = 0; i < initialCoordinates.length; i++) {
+            if (board.getBlock(initialCoordinates[i][0], initialCoordinates[i][1]).getColor() != Color.BLACK) {
+                this.blocks = null;
+                return;
+            }
             blocks.add(board.getBlock(initialCoordinates[i][0], initialCoordinates[i][1]));
             board.getBlock(initialCoordinates[i][0], initialCoordinates[i][1]).setColor(color);
 

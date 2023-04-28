@@ -1,15 +1,18 @@
 package model;
 
+import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class Board {
+public class Board{
     public static final int ROW_COUNT = 20;
     public static final int COLUMN_COUNT = 10;
     private Block[][] blocks;
     private Piece piece;
+    public boolean isGameOver;
+    public boolean isGamePaused;
 
     public Board() {
         blocks = new Block[ROW_COUNT][COLUMN_COUNT];
@@ -19,6 +22,8 @@ public class Board {
             }
         }
         piece = new Piece(this);
+        isGameOver = false;
+        isGamePaused = false;
     }
 
     public Block getBlock(int row, int column){
@@ -172,13 +177,13 @@ public class Board {
             if (b.getRow() == Board.ROW_COUNT-1  || (blocks[b.getRow()+1][b.getColumn()].getColor() != Color.BLACK && !piece.getBlocks().contains(blocks[b.getRow()+1][b.getColumn()]))) {
                 checkForCompleteRows();
                 piece = new Piece(this);
+                gameOver(piece.getBlocks() == null);
                 return;
             }
         }
     }
 
     private void deleteRow(int rowIndex) {
-        System.out.println("delete" + rowIndex);
         for (int row = rowIndex; row > 0; row--) {
             blocks[row] = blocks[row-1].clone();
             Arrays.stream(blocks[row]).forEach(block -> block.setRow(block.getRow()+1));
@@ -193,6 +198,14 @@ public class Board {
             if (Arrays.stream(blocks[row]).allMatch(block -> block.getColor() != Color.BLACK)) {
                 deleteRow(row);
             }
+        }
+    }
+
+    private void gameOver(boolean isGameOver) {
+        if (!isGameOver) return;
+        else {
+            JOptionPane.showMessageDialog(null, "Game Over!");
+            this.isGameOver = true;
         }
     }
 }

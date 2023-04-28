@@ -8,7 +8,7 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-public class GamePanel extends JComponent implements KeyListener {
+public class GamePanel extends JComponent implements KeyListener, Runnable {
     private final Board board;
 
     public GamePanel() {
@@ -16,6 +16,7 @@ public class GamePanel extends JComponent implements KeyListener {
         setPreferredSize(new Dimension(Board.COLUMN_COUNT* Block.BLOCK_SIZE, Board.ROW_COUNT*Block.BLOCK_SIZE));
         setFocusable(true);
         addKeyListener(this);
+        new Thread(this).start();
 
     }
     @Override
@@ -56,6 +57,27 @@ public class GamePanel extends JComponent implements KeyListener {
             case KeyEvent.VK_SPACE -> {
                 board.newPiece();
                 repaint();
+            }
+            case KeyEvent.VK_ESCAPE -> {
+                System.out.println(board.isGamePaused);
+                if (board.isGamePaused) {
+                    new Thread(this).start();
+                } else board.isGamePaused = !board.isGamePaused;
+            }
+        }
+    }
+    @Override
+    public void run() {
+        while (!board.isGameOver) {
+            while (!board.isGamePaused) {
+
+                try {
+                    board.moveDown();
+                    repaint();
+                    Thread.sleep(300);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
         }
     }
