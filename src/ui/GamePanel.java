@@ -2,6 +2,8 @@ package ui;
 
 import model.Block;
 import model.Board;
+import model.Piece;
+import model.Shape;
 
 import javax.swing.*;
 import java.awt.*;
@@ -10,9 +12,13 @@ import java.awt.event.KeyListener;
 
 public class GamePanel extends JComponent implements KeyListener, Runnable {
     private final Board board;
+    private final InfoPanel infoPanel;
+    private int speed;
 
-    public GamePanel() {
-        board = new Board();
+    public GamePanel(InfoPanel infoPanel) {
+        speed = 300;
+        this.infoPanel = infoPanel;
+        board = new Board(this);
         setPreferredSize(new Dimension(Board.COLUMN_COUNT* Block.BLOCK_SIZE, Board.ROW_COUNT*Block.BLOCK_SIZE));
         setFocusable(true);
         addKeyListener(this);
@@ -47,21 +53,17 @@ public class GamePanel extends JComponent implements KeyListener, Runnable {
                 repaint();
             }
             case KeyEvent.VK_DOWN -> {
-                board.moveDown();
+                board.hardDrop();
                 repaint();
             }
             case KeyEvent.VK_UP -> {
                 board.rotate();
                 repaint();
             }
-            case KeyEvent.VK_SPACE -> {
-                board.newPiece();
-                repaint();
-            }
             case KeyEvent.VK_ESCAPE -> {
-                System.out.println(board.isGamePaused);
                 if (board.isGamePaused) {
                     new Thread(this).start();
+                    board.isGamePaused = !board.isGamePaused;
                 } else board.isGamePaused = !board.isGamePaused;
             }
         }
@@ -74,11 +76,21 @@ public class GamePanel extends JComponent implements KeyListener, Runnable {
                 try {
                     board.moveDown();
                     repaint();
-                    Thread.sleep(300);
+                    Thread.sleep(speed - (board.level * 10));
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
             }
         }
+    }
+    public void setNextPiece(Shape shape) {
+        infoPanel.setNextPiece(shape);
+    }
+
+    public void setScore(int score, int level) {
+        infoPanel.setScore(score, level);
+    }
+    public int getScore() {
+        return infoPanel.getScore();
     }
 }

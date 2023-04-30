@@ -9,12 +9,14 @@ public class Piece {
 
     private final Shape shape;
     private List<Block> blocks;
+    private int[][] initialCoordinates;
+    private List<Block> preparedBlocks;
     private final Color color;
     private Block pivotBlock;
-    public Piece(Board board) {
-        this.shape = randomShape();
+    public Piece(Board board, Shape shape) {
+        this.shape = shape;
         this.blocks = new ArrayList<>();
-        int[][] initialCoordinates = new int[][]{};
+        initialCoordinates = new int[][]{};
         switch (shape){
             case T -> {
                 initialCoordinates = new int[][] {{0,3},{0,4},{0,5},{1,4}};
@@ -52,6 +54,7 @@ public class Piece {
             }
             default -> color = Color.BLACK;
         }
+
         for (int i = 0; i < initialCoordinates.length; i++) {
             if (board.getBlock(initialCoordinates[i][0], initialCoordinates[i][1]).getColor() != Color.BLACK) {
                 this.blocks = null;
@@ -61,12 +64,6 @@ public class Piece {
             board.getBlock(initialCoordinates[i][0], initialCoordinates[i][1]).setColor(color);
 
         }
-    }
-
-    private Shape randomShape(){
-        Shape[] values = Shape.values();
-        Random random = new Random();
-        return values[random.nextInt(values.length)];
     }
 
     public Shape getShape() {
@@ -90,5 +87,9 @@ public class Piece {
 
     public void setPivotBlock(Block pivotBlock) {
         this.pivotBlock = pivotBlock;
+    }
+
+    public int[][] getInitialCoordinates() {
+        return initialCoordinates;
     }
 }

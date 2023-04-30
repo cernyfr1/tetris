@@ -1,27 +1,40 @@
 package model;
 
+import ui.GamePanel;
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 public class Board{
     public static final int ROW_COUNT = 20;
     public static final int COLUMN_COUNT = 10;
+    private final GamePanel gamePanel;
     private Block[][] blocks;
     private Piece piece;
+    private Shape nextPiece;
     public boolean isGameOver;
     public boolean isGamePaused;
+    public int level;
+    private int totalRowsCompleted;
+    private boolean hardDropStop;
 
-    public Board() {
+    public Board(GamePanel gamePanel) {
+        level = 1;
+        hardDropStop = true;
+        this.gamePanel = gamePanel;
         blocks = new Block[ROW_COUNT][COLUMN_COUNT];
         for (int i = 0; i < ROW_COUNT; i++) {
             for (int j = 0; j < COLUMN_COUNT; j++) {
                 blocks[i][j] = new Block(i, j);
             }
         }
-        piece = new Piece(this);
+        piece = new Piece(this, randomShape());
+        nextPiece = randomShape();
+        gamePanel.setNextPiece(nextPiece);
         isGameOver = false;
         isGamePaused = false;
     }
@@ -116,6 +129,12 @@ public class Board{
         piece.setBlocks(newBlocks);
         checkUnder();
     }
+    public void hardDrop() {
+        hardDropStop = true;
+        while (hardDropStop) {
+            moveDown();
+        }
+    }
     public void rotate() {
         if (piece.getShape() == Shape.O) {
             return;
@@ -168,15 +187,15 @@ public class Board{
         return false;
     }
 
-    public void newPiece(){
-        piece = new Piece(this);
-    }
-
     private void checkUnder() {
         for (Block b : piece.getBlocks()) {
             if (b.getRow() == Board.ROW_COUNT-1  || (blocks[b.getRow()+1][b.getColumn()].getColor() != Color.BLACK && !piece.getBlocks().contains(blocks[b.getRow()+1][b.getColumn()]))) {
+                hardDropStop = false;
                 checkForCompleteRows();
-                piece = new Piece(this);
+                piece = new Piece(this, nextPiece);
+                nextPiece = randomShape();
+                gamePanel.setNextPiece(nextPiece);
+
                 gameOver(piece.getBlocks() == null);
                 return;
             }
@@ -191,14 +210,21 @@ public class Board{
         for (int col = 0; col < COLUMN_COUNT; col++) {
             blocks[0][col] = new Block(0,col);
         }
+        if (totalRowsCompleted != 0 && totalRowsCompleted % 10 == 0) {
+            level++;
+        }
     }
 
     private void checkForCompleteRows() {
+        int completeRows = 0;
         for (int row = 0; row < ROW_COUNT; row++) {
             if (Arrays.stream(blocks[row]).allMatch(block -> block.getColor() != Color.BLACK)) {
+                completeRows++;
+                totalRowsCompleted++;
                 deleteRow(row);
             }
         }
+        updateScore(completeRows);
     }
 
     private void gameOver(boolean isGameOver) {
@@ -207,5 +233,22 @@ public class Board{
             JOptionPane.showMessageDialog(null, "Game Over!");
             this.isGameOver = true;
         }
+    }
+
+    private Shape randomShape(){
+        Shape[] values = Shape.values();
+        Random random = new Random();
+        return values[random.nextInt(values.length)];
+    }
+    private void updateScore(int completeRows) {
+        int originalScore = gamePanel.getScore();
+        int newScore = gamePanel.getScore();
+        switch (completeRows) {
+            case 1 -> newScore = originalScore + 100 + (10 * level);
+            case 2 -> newScore = originalScore + 300 + (30 * level);
+            case 3 -> newScore = originalScore + 500 + (50 * level);
+            case 4 -> newScore = originalScore + 800 + (80 * level);
+        }
+        gamePanel.setScore(newScore, level);
     }
 }
