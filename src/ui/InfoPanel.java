@@ -14,6 +14,7 @@ public class InfoPanel extends JPanel {
     private JLabel highscoreLabel = new JLabel(highScore + "  ");
     private JLabel scoreLabel = new JLabel("0   ");
     private JLabel levelLable = new JLabel("1");
+    private JTextArea infoArea = new JTextArea("move left - ←\n move right - →\n rotate - ↑\n hard drop - ↓\n pause - ESC");
 
     public InfoPanel() {
         super();
@@ -33,7 +34,8 @@ public class InfoPanel extends JPanel {
         add(new JLabel("Level:"));
         levelLable.setFont(new Font("Serif", Font.BOLD, 18));
         add(levelLable);
-        add(new JTextArea("move left - ←\n move right - →\n rotate - ↑\n hard drop - ↓\n pause - ESC"));
+        infoArea.setEditable(false);
+        add(infoArea);
 
     }
 
@@ -47,11 +49,15 @@ public class InfoPanel extends JPanel {
 
     public void setScore(int score, int level) {
         this.score = score;
-        scoreLabel.setText(String.valueOf(score));
+        scoreLabel.setText(score + "   ");
         levelLable.setText(String.valueOf(level));
         if (score > highScore) {
             highScore = score;
             highscoreLabel.setText(String.valueOf(highScore));
         }
+    }
+
+    public int getHighScore() {
+        return highScore;
     }
 }

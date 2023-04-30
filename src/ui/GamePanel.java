@@ -13,11 +13,13 @@ import java.awt.event.KeyListener;
 public class GamePanel extends JComponent implements KeyListener, Runnable {
     private final Board board;
     private final InfoPanel infoPanel;
+    private final Frame frame;
     private int speed;
 
-    public GamePanel(InfoPanel infoPanel) {
+    public GamePanel(Frame frame, InfoPanel infoPanel) {
         speed = 300;
         this.infoPanel = infoPanel;
+        this.frame = frame;
         board = new Board(this);
         setPreferredSize(new Dimension(Board.COLUMN_COUNT* Block.BLOCK_SIZE, Board.ROW_COUNT*Block.BLOCK_SIZE));
         setFocusable(true);
@@ -61,10 +63,7 @@ public class GamePanel extends JComponent implements KeyListener, Runnable {
                 repaint();
             }
             case KeyEvent.VK_ESCAPE -> {
-                if (board.isGamePaused) {
-                    new Thread(this).start();
-                    board.isGamePaused = !board.isGamePaused;
-                } else board.isGamePaused = !board.isGamePaused;
+                frame.pausePlay();
             }
         }
     }
@@ -74,8 +73,10 @@ public class GamePanel extends JComponent implements KeyListener, Runnable {
             while (!board.isGamePaused) {
 
                 try {
-                    board.moveDown();
-                    repaint();
+                    if (!board.isGameOver) {
+                        board.moveDown();
+                        repaint();
+                    }
                     Thread.sleep(speed - (board.level * 10));
                 } catch (InterruptedException e) {
                     e.printStackTrace();
@@ -92,5 +93,14 @@ public class GamePanel extends JComponent implements KeyListener, Runnable {
     }
     public int getScore() {
         return infoPanel.getScore();
+    }
+    public void setGameStatus(boolean status) {
+        board.isGamePaused = status;
+        if (!board.isGamePaused) {
+            new Thread(this).start();
+        }
+    }
+    public void gameOver(int score) {
+        frame.gameOver(score);
     }
 }

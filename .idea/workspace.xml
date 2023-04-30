@@ -5,15 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="11f5d425-07db-4a0f-8240-1b5dbe9e72f9" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/ui/GameOverPanel.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/InfoPanel.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/NextPiecePanel.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/PausePanel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/ui/InitPanel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/model/Board.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Board.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model/Piece.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Piece.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ui/Frame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ui/Frame.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ui/GameOverPanel.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ui/GamePanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ui/GamePanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ui/InfoPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ui/InfoPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ui/PausePanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ui/PausePanel.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -85,7 +84,7 @@
       <workItem from="1681637786855" duration="17262000" />
       <workItem from="1682403522495" duration="2383000" />
       <workItem from="1682501259344" duration="22746000" />
-      <workItem from="1682839368427" duration="13911000" />
+      <workItem from="1682839368427" duration="25625000" />
     </task>
     <task id="LOCAL-00001" summary="Initial commit">
       <created>1680175030254</created>
@@ -136,7 +135,14 @@
       <option name="project" value="LOCAL" />
       <updated>1682712035999</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Implement score counting and InfoPanel">
+      <created>1682857028026</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1682857028026</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -150,6 +156,7 @@
     <MESSAGE value="Implement checkUnder method" />
     <MESSAGE value="Implement row deletion methods" />
     <MESSAGE value="Implement Runnable and game pause" />
-    <option name="LAST_COMMIT_MESSAGE" value="Implement Runnable and game pause" />
+    <MESSAGE value="Implement score counting and InfoPanel" />
+    <option name="LAST_COMMIT_MESSAGE" value="Implement score counting and InfoPanel" />
   </component>
 </project>

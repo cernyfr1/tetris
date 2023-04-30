@@ -228,10 +228,11 @@ public class Board{
     }
 
     private void gameOver(boolean isGameOver) {
-        if (!isGameOver) return;
+        if (!isGameOver) {}
         else {
-            JOptionPane.showMessageDialog(null, "Game Over!");
             this.isGameOver = true;
+            JOptionPane.showMessageDialog(null, "Game Over!");
+            gamePanel.gameOver(gamePanel.getScore());
         }
     }
 
