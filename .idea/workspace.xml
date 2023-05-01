@@ -7,7 +7,6 @@
     <list default="true" id="11f5d425-07db-4a0f-8240-1b5dbe9e72f9" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/model/Board.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Board.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ui/GamePanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ui/GamePanel.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -81,7 +80,7 @@
       <workItem from="1682501259344" duration="22746000" />
       <workItem from="1682839368427" duration="25795000" />
       <workItem from="1682932489164" duration="3381000" />
-      <workItem from="1682939856868" duration="434000" />
+      <workItem from="1682939856868" duration="1192000" />
     </task>
     <task id="LOCAL-00001" summary="Initial commit">
       <created>1680175030254</created>
@@ -160,7 +159,14 @@
       <option name="project" value="LOCAL" />
       <updated>1682937906049</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="Refactor move methods">
+      <created>1682940527348</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1682940527348</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -178,6 +184,7 @@
     <MESSAGE value="Implement rest of UI" />
     <MESSAGE value="Implement ReentrantLock, synchronized methods, guard" />
     <MESSAGE value="Clean up" />
-    <option name="LAST_COMMIT_MESSAGE" value="Clean up" />
+    <MESSAGE value="Refactor move methods" />
+    <option name="LAST_COMMIT_MESSAGE" value="Refactor move methods" />
   </component>
 </project>

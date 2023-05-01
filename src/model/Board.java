@@ -59,8 +59,8 @@ public class Board{
             List<Block> pieceBlocks = piece.getBlocks();
             List<Block> newBlocks = new ArrayList<>();
             for (Block b : pieceBlocks) {if (isOutOfTheBoard(b.getRow()+down, b.getColumn()+sideways)) return;}
+            boolean pivotSet = false;
             for (Block b : pieceBlocks) {
-                boolean pivotSet = false;
                 newBlocks.add(blocks[b.getRow()+down][b.getColumn()+sideways]);
                 if (!pivotSet && b.equals(piece.getPivotBlock())) {
                     piece.setPivotBlock(blocks[b.getRow()+down][b.getColumn()+sideways]);
