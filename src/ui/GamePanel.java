@@ -13,7 +13,7 @@ public class GamePanel extends JComponent implements KeyListener, Runnable {
     private final Board board;
     private final InfoPanel infoPanel;
     private final Frame frame;
-    private int speed;
+    private final int speed;
 
     public GamePanel(Frame frame, InfoPanel infoPanel) {
         speed = 300;
@@ -61,26 +61,20 @@ public class GamePanel extends JComponent implements KeyListener, Runnable {
                 board.rotate();
                 repaint();
             }
-            case KeyEvent.VK_ESCAPE -> {
+            case KeyEvent.VK_ESCAPE ->
                 frame.pausePlay();
-            }
         }
     }
     @Override
     public void run() {
-        while (!board.isGameOver) {
-            while (!board.isGamePaused) {
-
+        while (!board.isGameOver && !board.isGamePaused) {
                 try {
-                    if (!board.isGameOver) {
-                        board.move(1,0);
-                        repaint();
-                    }
+                    board.move(1,0);
+                    repaint();
                     Thread.sleep(speed - (board.level * 10));
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-            }
         }
     }
     public void setNextPiece(Shape shape) {
