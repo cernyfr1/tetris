@@ -2,7 +2,6 @@ package ui;
 
 import model.Block;
 import model.Board;
-import model.Piece;
 import model.Shape;
 
 import javax.swing.*;

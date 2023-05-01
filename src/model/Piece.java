@@ -3,14 +3,12 @@ package model;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 public class Piece {
 
     private final Shape shape;
     private List<Block> blocks;
     private int[][] initialCoordinates;
-    private List<Block> preparedBlocks;
     private final Color color;
     private Block pivotBlock;
     public Piece(Board board, Shape shape) {

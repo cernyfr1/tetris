@@ -56,8 +56,4 @@ public class InfoPanel extends JPanel {
             highscoreLabel.setText(String.valueOf(highScore));
         }
     }
-
-    public int getHighScore() {
-        return highScore;
-    }
 }

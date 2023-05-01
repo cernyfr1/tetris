@@ -8,10 +8,8 @@ import java.awt.*;
 
 public class InitPanel extends JPanel {
 
-    private final Frame frame;
     private final JButton startBtn, quitBtn;
     public InitPanel(Frame frame, int score) {
-        this.frame = frame;
         setPreferredSize(new Dimension(Board.COLUMN_COUNT* Block.BLOCK_SIZE, Board.ROW_COUNT*Block.BLOCK_SIZE));
         setLayout(new GridLayout(3,1));
 

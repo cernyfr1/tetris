@@ -4,7 +4,8 @@ import java.awt.*;
 
 public class Block {
     public static final int BLOCK_SIZE = 20;
-    private int row, column;
+    private int row;
+    private final int column;
     private Color color;
 
     public Block(int row, int column) {
@@ -23,10 +24,6 @@ public class Block {
 
     public int getColumn() {
         return column;
-    }
-
-    public void setColumn(int column) {
-        this.column = column;
     }
 
     public Color getColor() {
