@@ -46,11 +46,11 @@ public class GamePanel extends JComponent implements KeyListener, Runnable {
     public void keyReleased(KeyEvent e) {
         switch (e.getKeyCode()){
             case KeyEvent.VK_LEFT -> {
-                board.moveLeft();
+                board.move(0,-1);
                 repaint();
             }
             case KeyEvent.VK_RIGHT -> {
-                board.moveRight();
+                board.move(0,1);
                 repaint();
             }
             case KeyEvent.VK_DOWN -> {
@@ -73,7 +73,7 @@ public class GamePanel extends JComponent implements KeyListener, Runnable {
 
                 try {
                     if (!board.isGameOver) {
-                        board.moveDown();
+                        board.move(1,0);
                         repaint();
                     }
                     Thread.sleep(speed - (board.level * 10));

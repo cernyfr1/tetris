@@ -52,84 +52,18 @@ public class Board{
         }
     }
 
-    public void moveLeft(){
+
+    public void move(int down, int sideways){
         lock.lock();
         try {
             List<Block> pieceBlocks = piece.getBlocks();
             List<Block> newBlocks = new ArrayList<>();
-            for (Block b : pieceBlocks) {if (isOutOfTheBoard(b.getRow(), b.getColumn()-1)) return;}
+            for (Block b : pieceBlocks) {if (isOutOfTheBoard(b.getRow()+down, b.getColumn()+sideways)) return;}
             for (Block b : pieceBlocks) {
                 boolean pivotSet = false;
-                if (isOutOfTheBoard(b.getRow(), b.getColumn()-1)) return;
-                newBlocks.add(blocks[b.getRow()][b.getColumn()-1]);
+                newBlocks.add(blocks[b.getRow()+down][b.getColumn()+sideways]);
                 if (!pivotSet && b.equals(piece.getPivotBlock())) {
-                    piece.setPivotBlock(blocks[b.getRow()][b.getColumn()-1]);
-                    pivotSet = true;
-                }
-            }
-            for (Block block : newBlocks) {
-                if (!pieceBlocks.contains(block)) {
-                    if (isInCollision(block.getRow(), block.getColumn())) {
-                        return;
-                    }
-                }
-            }
-            for (Block b : pieceBlocks) {
-                b.setColor(Color.BLACK);
-            }
-            for (Block b : newBlocks) {
-                b.setColor(piece.getColor());
-            }
-            piece.setBlocks(newBlocks);
-            checkUnder();
-        } finally {
-            lock.unlock();
-        }
-    }
-    public void moveRight(){
-        lock.lock();
-        try {
-            List<Block> pieceBlocks = piece.getBlocks();
-            List<Block> newBlocks = new ArrayList<>();
-            for (Block b : pieceBlocks) {if (isOutOfTheBoard(b.getRow(), b.getColumn()+1)) return;}
-            for (Block b : pieceBlocks) {
-                boolean pivotSet = false;
-                newBlocks.add(blocks[b.getRow()][b.getColumn()+1]);
-                if (!pivotSet && b.equals(piece.getPivotBlock())) {
-                    piece.setPivotBlock(blocks[b.getRow()][b.getColumn()+1]);
-                    pivotSet = true;
-                }
-            }
-            for (Block block : newBlocks) {
-                if (!pieceBlocks.contains(block)) {
-                    if (isInCollision(block.getRow(), block.getColumn())) {
-                        return;
-                    }
-                }
-            }
-            for (Block b : pieceBlocks) {
-                b.setColor(Color.BLACK);
-            }
-            for (Block b : newBlocks) {
-                b.setColor(piece.getColor());
-            }
-            piece.setBlocks(newBlocks);
-            checkUnder();
-        } finally {
-            lock.unlock();
-        }
-    }
-    public void moveDown(){
-        lock.lock();
-        try {
-            List<Block> pieceBlocks = piece.getBlocks();
-            List<Block> newBlocks = new ArrayList<>();
-            for (Block b : pieceBlocks) {if (isOutOfTheBoard(b.getRow()+1, b.getColumn())) return;}
-            for (Block b : pieceBlocks) {
-                boolean pivotSet = false;
-                newBlocks.add(blocks[b.getRow()+1][b.getColumn()]);
-                if (!pivotSet && b.equals(piece.getPivotBlock())) {
-                    piece.setPivotBlock(blocks[b.getRow()+1][b.getColumn()]);
+                    piece.setPivotBlock(blocks[b.getRow()+down][b.getColumn()+sideways]);
                     pivotSet = true;
                 }
             }
@@ -155,7 +89,7 @@ public class Board{
     public void hardDrop() {
         hardDropStop = true;
         while (hardDropStop) {
-            moveDown();
+            move(1,0);
         }
     }
     public void rotate() {
