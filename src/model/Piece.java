@@ -73,7 +73,7 @@ public class Piece {
         return blocks;
     }
 
-    public void setBlocks(List<Block> blocks) {
+    public synchronized void setBlocks(List<Block> blocks) {
         this.blocks = blocks;
     }
 
@@ -85,11 +85,7 @@ public class Piece {
         return pivotBlock;
     }
 
-    public void setPivotBlock(Block pivotBlock) {
+    public synchronized void setPivotBlock(Block pivotBlock) {
         this.pivotBlock = pivotBlock;
-    }
-
-    public int[][] getInitialCoordinates() {
-        return initialCoordinates;
     }
 }

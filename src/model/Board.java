@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class Board{
     public static final int ROW_COUNT = 20;
@@ -21,6 +22,7 @@ public class Board{
     public int level;
     private int totalRowsCompleted;
     private boolean hardDropStop;
+    private final ReentrantLock lock = new ReentrantLock();
 
     public Board(GamePanel gamePanel) {
         level = 1;
@@ -51,83 +53,104 @@ public class Board{
     }
 
     public void moveLeft(){
-        List<Block> pieceBlocks = piece.getBlocks();
-        List<Block> newBlocks = new ArrayList<>();
-        for (Block b : pieceBlocks) {if (isOutOfTheBoard(b.getRow(), b.getColumn()-1)) return;}
-        for (Block b : pieceBlocks) {
-            if (isOutOfTheBoard(b.getRow(), b.getColumn()-1)) return;
-            newBlocks.add(blocks[b.getRow()][b.getColumn()-1]);
-            if (b.equals(piece.getPivotBlock())) {
-                piece.setPivotBlock(blocks[b.getRow()][b.getColumn()-1]);
-            }
-        }
-        for (Block block : newBlocks) {
-            if (!pieceBlocks.contains(block)) {
-                if (isInCollision(block.getRow(), block.getColumn())) {
-                    return;
+        lock.lock();
+        try {
+            List<Block> pieceBlocks = piece.getBlocks();
+            List<Block> newBlocks = new ArrayList<>();
+            for (Block b : pieceBlocks) {if (isOutOfTheBoard(b.getRow(), b.getColumn()-1)) return;}
+            for (Block b : pieceBlocks) {
+                boolean pivotSet = false;
+                if (isOutOfTheBoard(b.getRow(), b.getColumn()-1)) return;
+                newBlocks.add(blocks[b.getRow()][b.getColumn()-1]);
+                if (!pivotSet && b.equals(piece.getPivotBlock())) {
+                    piece.setPivotBlock(blocks[b.getRow()][b.getColumn()-1]);
+                    pivotSet = true;
                 }
             }
+            for (Block block : newBlocks) {
+                if (!pieceBlocks.contains(block)) {
+                    if (isInCollision(block.getRow(), block.getColumn())) {
+                        return;
+                    }
+                }
+            }
+            for (Block b : pieceBlocks) {
+                b.setColor(Color.BLACK);
+            }
+            for (Block b : newBlocks) {
+                b.setColor(piece.getColor());
+            }
+            piece.setBlocks(newBlocks);
+            checkUnder();
+        } finally {
+            lock.unlock();
         }
-        for (Block b : pieceBlocks) {
-            b.setColor(Color.BLACK);
-        }
-        for (Block b : newBlocks) {
-            b.setColor(piece.getColor());
-        }
-        piece.setBlocks(newBlocks);
-        checkUnder();
     }
     public void moveRight(){
-        List<Block> pieceBlocks = piece.getBlocks();
-        List<Block> newBlocks = new ArrayList<>();
-        for (Block b : pieceBlocks) {if (isOutOfTheBoard(b.getRow(), b.getColumn()+1)) return;}
-        for (Block b : pieceBlocks) {
-            newBlocks.add(blocks[b.getRow()][b.getColumn()+1]);
-            if (b.equals(piece.getPivotBlock())) {
-                piece.setPivotBlock(blocks[b.getRow()][b.getColumn()+1]);
-            }
-        }
-        for (Block block : newBlocks) {
-            if (!pieceBlocks.contains(block)) {
-                if (isInCollision(block.getRow(), block.getColumn())) {
-                    return;
+        lock.lock();
+        try {
+            List<Block> pieceBlocks = piece.getBlocks();
+            List<Block> newBlocks = new ArrayList<>();
+            for (Block b : pieceBlocks) {if (isOutOfTheBoard(b.getRow(), b.getColumn()+1)) return;}
+            for (Block b : pieceBlocks) {
+                boolean pivotSet = false;
+                newBlocks.add(blocks[b.getRow()][b.getColumn()+1]);
+                if (!pivotSet && b.equals(piece.getPivotBlock())) {
+                    piece.setPivotBlock(blocks[b.getRow()][b.getColumn()+1]);
+                    pivotSet = true;
                 }
             }
+            for (Block block : newBlocks) {
+                if (!pieceBlocks.contains(block)) {
+                    if (isInCollision(block.getRow(), block.getColumn())) {
+                        return;
+                    }
+                }
+            }
+            for (Block b : pieceBlocks) {
+                b.setColor(Color.BLACK);
+            }
+            for (Block b : newBlocks) {
+                b.setColor(piece.getColor());
+            }
+            piece.setBlocks(newBlocks);
+            checkUnder();
+        } finally {
+            lock.unlock();
         }
-        for (Block b : pieceBlocks) {
-            b.setColor(Color.BLACK);
-        }
-        for (Block b : newBlocks) {
-            b.setColor(piece.getColor());
-        }
-        piece.setBlocks(newBlocks);
-        checkUnder();
     }
     public void moveDown(){
-        List<Block> pieceBlocks = piece.getBlocks();
-        List<Block> newBlocks = new ArrayList<>();
-        for (Block b : pieceBlocks) {if (isOutOfTheBoard(b.getRow()+1, b.getColumn())) return;}
-        for (Block b : pieceBlocks) {
-            newBlocks.add(blocks[b.getRow()+1][b.getColumn()]);
-            if (b.equals(piece.getPivotBlock())) {
-                piece.setPivotBlock(blocks[b.getRow()+1][b.getColumn()]);
-            }
-        }
-        for (Block block : newBlocks) {
-            if (!pieceBlocks.contains(block)) {
-                if (isInCollision(block.getRow(), block.getColumn())) {
-                    return;
+        lock.lock();
+        try {
+            List<Block> pieceBlocks = piece.getBlocks();
+            List<Block> newBlocks = new ArrayList<>();
+            for (Block b : pieceBlocks) {if (isOutOfTheBoard(b.getRow()+1, b.getColumn())) return;}
+            for (Block b : pieceBlocks) {
+                boolean pivotSet = false;
+                newBlocks.add(blocks[b.getRow()+1][b.getColumn()]);
+                if (!pivotSet && b.equals(piece.getPivotBlock())) {
+                    piece.setPivotBlock(blocks[b.getRow()+1][b.getColumn()]);
+                    pivotSet = true;
                 }
             }
+            for (Block block : newBlocks) {
+                if (!pieceBlocks.contains(block)) {
+                    if (isInCollision(block.getRow(), block.getColumn())) {
+                        return;
+                    }
+                }
+            }
+            for (Block b : pieceBlocks) {
+                b.setColor(Color.BLACK);
+            }
+            for (Block b : newBlocks) {
+                b.setColor(piece.getColor());
+            }
+            piece.setBlocks(newBlocks);
+            checkUnder();
+        } finally {
+            lock.unlock();
         }
-        for (Block b : pieceBlocks) {
-            b.setColor(Color.BLACK);
-        }
-        for (Block b : newBlocks) {
-            b.setColor(piece.getColor());
-        }
-        piece.setBlocks(newBlocks);
-        checkUnder();
     }
     public void hardDrop() {
         hardDropStop = true;
